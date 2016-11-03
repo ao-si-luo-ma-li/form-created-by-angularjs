@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>form used AngularJs</title>
+    <link rel="stylesheet" type="text/css" href="lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="lib/font-awesome/css/font-awesome.css">
+</head>
+<style>
+.error {
+    border-color: red;
+}
+
+.ng-invalid.ng-touched {
+    border-width: 2px;
+}
+
+.error-info {
+    color: red;
+}
+
+.input_result {
+    position: relative;
+}
+
+.input_result .success {
+    position: absolute;
+    right: 5px;
+    top: 6px;
+    font-size: 20px;
+    color: #63BD2A;
+}
+
+.has-success {
+    border-color: #63BD2A
+}
+</style>
+
+<body ng-app="myApp">
+    <!-- ng-model 指令用于绑定应用程序数据到 HTML 控制器(input, select, textarea)的值。 -->
+    <div class="container" ng-controller="signUpController">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <h2>注册</h2>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form name="signUpForm" class="signUpForm form-horizontal" role="form" ng-submit="submitForm()" >
+                            <div class="form-group">
+                                <pre>合法：{{signUpForm.username.$valid}}</pre>
+                                <pre>{{userData.username}}</pre>
+                                <div class="col-md-2">
+                                    <label for="username" class="control-label">用户名: </label>
+                                </div>
+                                <div class="col-md-10">
+                                    <div class="input_result">
+                                        <input name="username" id="username" type="text" class="form-control" ng-model="userData.username" ng-class="{ 'error': signUpForm.username.$invalid && signUpForm.username.$touched,'has-success': signUpForm.username.$valid}" ng-minlength="4" ng-maxlength="32" required />
+                                        <i class="fa fa-check success" ng-show="signUpForm.username.$valid"></i>
+                                    </div>
+                                </div>
+                             	<p class="error-info" ng-show="signUpForm.username.$error.required && signUpForm.username.$touched">用户名不能为空</p>
+                                <p class="error-info" ng-show="signUpForm.username.$error.minlength || signUpForm.username.$error.maxlength && signUpForm.username.$touched">用户名长度应在4-32字节之间</p>
+                            </div>
+                            <div class="form-group">
+                                <pre>合法：{{signUpForm.password1.$valid}}</pre>
+                                <pre>{{userData.password1}}</pre>
+                                <div class="col-md-2">
+                                    <label for="password1" class="control-label">密码: </label>
+                                </div>
+                                <div class="col-md-10">
+                                    <div class="input_result">
+                                        <input name="password1" id="password1" type="password" class="form-control" ng-model="userData.password1" ng-minlength="6" ng-maxlength="16" ng-class="{'has-success':signUpForm.password1.$valid}" required />
+                                        <i class="fa fa-check success" ng-show="signUpForm.password1.$valid"></i>
+                                    </div>
+                                </div>
+                                <p class="error-info" ng-show="signUpForm.password1.$error.required && signUpForm.password1.$touched ">密码不能为空</p>
+                                <p class="error-info" ng-show="signUpForm.password1.$error.minlength || signUpForm.password1.$error.maxlength && signUpForm.password1.$touched ">密码长度应在6-16字符之间</p>
+                            </div>
+                            <div class="form-group">
+                                <pre>合法：{{signUpForm.password2.$valid}}</pre>
+                                <pre>{{userData.password2}}</pre>
+                                <div class="col-md-2">
+                                    <label for="password2" class="control-label">重复密码: </label>
+                                </div>
+                                <!-- 自定义指令compare -->
+                                <div class="col-md-10">
+                                    <div class="input_result">
+                                        <input name="password2" id="password2" type="password" class="form-control" ng-model="userData.password2" compare="userData.password1" ng-class="{'has-success':signUpForm.password2.$valid}" required />
+                                        <i class="fa fa-check success" ng-show="signUpForm.password2.$valid"></i>
+                                    </div>
+                                </div>
+                                <p class="error-info" ng-show="signUpForm.password2.$error.compare && signUpForm.password2.$touched ">俩次密码不一致</p>
+                            </div>
+
+                            <div class="form-group">
+                            	<div class="col-md-offset-2 col-md-10">
+                            		<pre>{{userData.checkbox}}</pre>
+                            		<div class="checkbox">
+                            			<label>
+                            				<input type="checkbox" name="checkbox" ng-model="userData.checkbox"> Remember me
+                            			</label>
+                            		</div>
+                            	</div>
+                            </div>
+                            <div class="form-group">
+                            	<div class="col-md-offset-2 col-md-10">
+                            		<button class="btn btn-primary">注册用户</button>
+                            		<button class="btn btn-primary" ng-click="getFormData()">获取form的值</button>
+                            		<button class="btn btn-primary" ng-click="setFormData()">设置form的值</button>
+                            	</div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="lib/jquery/dist/jquery.js"></script>
+<script type="text/javascript" src="node_modules/.1.5.8@angular/angular.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
+
+</html>
